@@ -2,55 +2,74 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Emily, com Amor</title>
+    
+    <title>Para Emily, com Todo o Meu Amor ❤️</title>
+    
     <link rel="stylesheet" href="css/style.css">
-    <!-- Fontes do Google Fonts: Uma romântica para títulos e uma limpa para textos -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
-    <!-- Recipiente para a chuva de corações via CSS/JS -->
-    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="hearts-container" id="heartsContainer" aria-hidden="true"></div>
 
-    <!-- SEÇÃO 1: Boas-vindas e Contador -->
     <header class="hero-section">
-        <h1 class="main-title">Oi, Emily! ❤️</h1>
-        <p class="subtitle">O meu coração está sempre pertinho do seu.</p>
+        <div class="hero-content">
+            <h1 class="main-title">Oi, Emily! ❤️</h1>
+            <p class="subtitle">O meu coração está sempre coladinho ao seu, hoje e sempre.</p>
+        </div>
         
-        <!-- Contador de Tempo Junto -->
         <div class="counter-box">
-            <h3>Estamos juntos há:</h3>
-            <div id="timer">Carregando o nosso tempo...</div>
+            <h3 class="counter-title">Estamos juntos há exatamente:</h3>
+            <div id="timer" class="timer-display">Calculando cada segundo de amor...</div>
         </div>
     </header>
 
-    <!-- SEÇÃO 2: O Quiz Romântico -->
-    <main class="quiz-container">
-        <h2>Jogo do Amor: Você me conhece? 🕹️</h2>
+    <main class="quiz-container" aria-live="polite">
+        <header class="quiz-header">
+            <h2>Jogo do Amor: Você me conhece? 🕹️</h2>
+            <p class="quiz-instruction">Responda as perguntinhas para liberar sua surpresa final!</p>
+        </header>
+        
         <div id="quiz">
             <div class="question-card" id="questionCard">
-                <p id="questionText">Carregando pergunta...</p>
+                <p id="questionText" class="question-text">Preparando o terreno do amor...</p>
+                
                 <div class="options-grid" id="optionsBox">
-                    <!-- As opções de resposta vão aparecer aqui dinamicamente pelo arquivo game.js -->
-                </div>
+                    </div>
             </div>
-            <p id="quizFeedback" class="feedback-text"></p>
+            
+            <p id="quizFeedback" class="feedback-text" role="status"></p>
         </div>
     </main>
 
-    <!-- SEÇÃO 3: A Cartinha Secreta (Fica escondida até ela acertar o quiz) -->
     <section class="love-letter-section hidden" id="loveLetterSection">
-        <div class="letter-box">
-            <h2>Minha Cartinha para Você 💌</h2>
-            <div class="letter-text" id="typewriterLetter">
-                <!-- O texto da sua carta vai aparecer aqui com efeito de máquina de escrever pelo main.js -->
+        
+        <div class="verified-badge-container">
+            <div class="verified-badge">
+                <span class="badge-icon" aria-hidden="true">✓</span>
+                <span class="badge-text">Emily: Namorada Oficial Verificada</span>
             </div>
+        </div>
+
+        <div class="letter-box">
+            <header class="letter-header">
+                <h2>Minha Cartinha para Você 💌</h2>
+            </header>
+            
+            <div class="letter-text" id="typewriterLetter">
+                </div>
         </div>
     </section>
 
-    <!-- Scripts de controle -->
     <script src="js/main.js"></script>
+    
     <script src="js/game.js"></script>
 </body>
 </html>
