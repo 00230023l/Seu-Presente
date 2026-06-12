@@ -2,13 +2,12 @@
    1. CONFIGURAÇÕES INICIAIS E VARIÁVEIS DO CASAL
    ========================================================================== */
 
-// AJUSTE A DATA DO INÍCIO DO NAMORO AQUI!
-// Formato: Ano, Mês (Atenção: Janeiro é 0, Fevereiro é 1, Março é 2... Junho é 5)
-// Configurei abaixo como exemplo o dia 12 de Junho de 2025. Mude para a data real de vocês!
+// AJUSTE CRUCIAL DA DATA: Para dar exatamente 1 mês, 1 semana, 3 horas e 20 minutos hoje (12 de Junho às 17:20)
+// A data correta de início tem que ser: 05 de Maio de 2026 às 14:00:00.
+// No JavaScript, o mês de Maio é o número 4.
 const DATA_INICIO_NAMORO = new Date(2026, 4, 5, 14, 0, 0); 
 
-// TEXTO COMPLETO DA SUA CARTINHA DE AMOR
-// Sinta-se livre para aumentar ou reescrever este texto como quiser dentro das crases (``).
+// TEXTO COMPLETO DA SUA CARTINHA DE AMOR (Com o seu nome: Adrian)
 const TEXTO_DA_CARTA = `Querida Emily,
 
 Escrevi este site inteiramente para você porque queria te dar algo único. Queria que cada linha de código, cada coração caindo na tela e cada segundo contado aqui mostrassem o quanto você é especial e importante para mim.
@@ -18,7 +17,7 @@ O meu coração está sempre coladinho ao seu, não importa o momento. Eu amo tu
 Obrigado por ser a minha namorada, a minha parceira e o meu amor. Parabéns pelo nosso Dia dos Namorados!
 
 Com todo o amor do mundo,
-Seu Nome ❤️`;
+Adrian ❤️`;
 
 
 /* ==========================================================================
@@ -28,47 +27,34 @@ function criarChuvaDeCoracoes() {
     const container = document.getElementById('heartsContainer');
     if (!container) return;
 
-    // Lista de símbolos de coração para gerar variedade visual na queda
     const tiposDeCoracoes = ['❤️', '💖', '💝', '💕', '💗'];
 
-    // Função interna que fabrica e solta um coração por vez
     function gerarCoracao() {
         const coracao = document.createElement('div');
         coracao.classList.add('heart-element');
-        
-        // Seleciona um emoji aleatório da lista
         coracao.innerText = tiposDeCoracoes[Math.floor(Math.random() * tiposDeCoracoes.length)];
-        
-        // Define uma posição horizontal aleatória (entre 0% e 100% da largura da tela)
         coracao.style.left = Math.random() * 100 + 'vw';
         
-        // Define um tamanho aleatório para dar sensação de profundidade no visual
-        const tamanhoAleatorio = Math.random() * 1.5 + 0.8; // Varia entre 0.8rem e 2.3rem
+        const tamanhoAleatorio = Math.random() * 1.5 + 0.8; 
         coracao.style.fontSize = `${tamanhoAleatorio}rem`;
         
-        // Define uma velocidade de queda aleatória (uns caem mais rápido, outros mais devagar)
-        const duracaoAleatoria = Math.random() * 4 + 4; // Varia entre 4 e 8 segundos
+        const duracaoAleatoria = Math.random() * 4 + 4; 
         coracao.style.animationDuration = `${duracaoAleatoria}s`;
-        
-        // Vincula explicitamente à animação de queda estruturada no CSS
         coracao.style.animationName = 'fallDown';
         
-        // Injeta o coração estruturado dentro do HTML do site
         container.appendChild(coracao);
         
-        // Remove o coração do código assim que ele terminar de cair para o site não travar
         setTimeout(() => {
             coracao.remove();
         }, duracaoAleatoria * 1000);
     }
 
-    // Cria um novo coração caindo a cada 350 milissegundos
     setInterval(gerarCoracao, 350);
 }
 
 
 /* ==========================================================================
-   3. CRONÔMETRO DO TEMPO JUNTO (ATUALIZAÇÃO SEGUNDO A SEGUNDO)
+   3. CRONÔMETRO CORRIGIDO (CONTA EXATAMENTE MESES, SEMANAS, DIAS e HORAS)
    ========================================================================== */
 function iniciarContadorTempo() {
     const displayTimer = document.getElementById('timer');
@@ -76,62 +62,70 @@ function iniciarContadorTempo() {
 
     function atualizarRelogio() {
         const agora = new Date();
-        const diferencaEmMilissegundos = agora - DATA_INICIO_NAMORO;
-
-        // Se a data configurada for inválida ou no futuro, evita exibir valores negativos
-        if (diferencaEmMilissegundos < 0) {
-            displayTimer.innerText = "O nosso tempo está prestes a começar! 🥰";
-            return;
-        }
-
-        // Conversões matemáticas de milissegundos para períodos de tempo legíveis
-        const segundosTotais = Math.floor(diferencaEmMilissegundos / 1000);
-        const minutosTotais = Math.floor(segundosTotais / 60);
-        const horasTotais = Math.floor(minutosTotais / 60);
         
-        // Separação modular dos valores finais do relógio
-        const dias = Math.floor(horasTotais / 24);
-        const horas = horasTotais % 24;
-        const minutos = minutosTotais % 60;
-        const segundos = segundosTotais % 60;
+        // Vamos calcular a diferença exata em formato de calendário
+        let anos = agora.getFullYear() - DATA_INICIO_NAMORO.getFullYear();
+        let meses = agora.getMonth() - DATA_INICIO_NAMORO.getMonth();
+        let dias = agora.getDate() - DATA_INICIO_NAMORO.getDate();
+        let horas = agora.getHours() - DATA_INICIO_NAMORO.getHours();
+        let minutos = agora.getMinutes() - DATA_INICIO_NAMORO.getMinutes();
+        let segundos = agora.getSeconds() - DATA_INICIO_NAMORO.getSeconds();
 
-        // Injeta o HTML estilizado com tags <span> para os números brilharem via CSS
+        // Ajustes matemáticos para viradas de minutos/horas/dias negativos
+        if (segundos < 0) { segundos += 60; minutos--; }
+        if (minutos < 0) { minutos += 60; horas--; }
+        if (horas < 0) { horas += 24; dias--; }
+        if (dias < 0) {
+            const copiaData = new Date(agora.getFullYear(), agora.getMonth(), 0);
+            dias += copiaData.getDate();
+            meses--;
+        }
+        if (meses < 0) { meses += 12; anos--; }
+
+        // Como vocês estão juntos há 1 mês e 1 semana, vamos extrair as semanas dos dias excedentes
+        let semanas = Math.floor(dias / 7);
+        dias = dias % 7; // O que sobrar vira dias individuais
+
+        // Monta o texto lindo dividindo certinho
         displayTimer.innerHTML = `
-            <span>${dias}</span> dias, 
+            <span>${meses}</span> mês, 
+            <span>${semanas}</span> semana, 
+            <span>${dias}</span>d 
             <span>${horas}</span>h 
             <span>${minutos}</span>m 
             e <span>${segundos}</span>s
         `;
     }
 
-    // Aciona o relógio imediatamente ao abrir a página
     atualizarRelogio();
-    
-    // Repete a atualização a cada 1 segundo (1000ms) de forma perpétua
     setInterval(atualizarRelogio, 1000);
 }
 
 
 /* ==========================================================================
-   4. EFEITO MÁQUINA DE ESCREVER (DIGITAÇÃO AUTOMÁTICA DA CARTA)
+   4. EFEITO MÁQUINA DE ESCREVER (CORRIGIDO: NÃO COME ESPAÇOS)
    ========================================================================== */
 function dispararEfeitoMaquinaEscrever() {
     const containerCarta = document.getElementById('typewriterLetter');
     if (!containerCarta) return;
 
     let indexCaractere = 0;
-    containerCarta.innerText = ""; // Limpa qualquer resquício de texto inicial
+    containerCarta.innerHTML = ""; // Limpa o container usando innerHTML
 
     function digitar() {
         if (indexCaractere < TEXTO_DA_CARTA.length) {
-            // Adiciona a letra atual correspondente ao índice
-            containerCarta.innerText += TEXTO_DA_CARTA.charAt(indexCaractere);
+            const caractereAtual = TEXTO_DA_CARTA.charAt(indexCaractere);
+            
+            // CORREÇÃO: Se for uma quebra de linha, insere a tag <br>, senão insere o caractere puro
+            if (caractereAtual === '\n') {
+                containerCarta.innerHTML += '<br>';
+            } else {
+                containerCarta.innerHTML += caractereAtual;
+            }
+            
             indexCaractere++;
+            setTimeout(digitar, 40); // 40ms deixa a digitação um pouquinho mais rápida e fluida
             
-            // Velocidade da digitação (50ms por caractere gera um ritmo muito natural)
-            setTimeout(digitar, 50);
-            
-            // Desce a página automaticamente acompanhando as novas linhas da carta
             window.scrollTo({
                 top: document.body.scrollHeight,
                 behavior: 'smooth'
@@ -139,53 +133,33 @@ function dispararEfeitoMaquinaEscrever() {
         }
     }
 
-    // Inicia o loop de digitação automática
     digitar();
 }
 
 
 /* ==========================================================================
-   5. ACIONAMENTO DA RECOMPENSA FINAL (CHAMADO PELO GAME.JS)
+   5. ACIONAMENTO DA RECOMPENSA FINAL
    ========================================================================== */
 function liberarRecompensaFinal() {
     const secaoCarta = document.getElementById('loveLetterSection');
     if (secaoCarta) {
-        // Torna a seção da cartinha e do selo visíveis removendo a classe utility
         secaoCarta.classList.remove('hidden'); 
         
-        // EXPLOSÃO DE CONFETES PRINCIPAL (No meio da tela)
         confetti({
             particleCount: 150,
             spread: 80,
             origin: { y: 0.6 }
         });
 
-        // RAJADAS DE CONFETES EXTRAS (Nas laterais esquerda e direita após 300ms)
         setTimeout(() => {
-            confetti({
-                particleCount: 60,
-                angle: 60,
-                spread: 60,
-                origin: { x: 0, y: 0.8 }
-            });
-            confetti({
-                particleCount: 60,
-                angle: 120,
-                spread: 60,
-                origin: { x: 1, y: 0.8 }
-            });
+            confetti({ particleCount: 60, angle: 60, spread: 60, origin: { x: 0, y: 0.8 } });
+            confetti({ particleCount: 60, angle: 120, spread: 60, origin: { x: 1, y: 0.8 } });
         }, 300);
 
-        // Inicia a exibição dinâmica do texto da carta
         dispararEfeitoMaquinaEscrever();       
     }
 }
 
-
-/* ==========================================================================
-   6. INICIALIZAÇÃO AUTOMÁTICA DO SITE
-   ========================================================================== */
-// Aguarda o navegador ler e renderizar todo o HTML antes de ativar os scripts visuais
 document.addEventListener('DOMContentLoaded', () => {
     criarChuvaDeCoracoes();
     iniciarContadorTempo();
