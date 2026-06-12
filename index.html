@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Emily, com Amor</title>
+    <link rel="stylesheet" href="css/style.css">
+    <!-- Fontes do Google Fonts: Uma romântica para títulos e uma limpa para textos -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Recipiente para a chuva de corações via CSS/JS -->
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <!-- SEÇÃO 1: Boas-vindas e Contador -->
+    <header class="hero-section">
+        <h1 class="main-title">Oi, Emily! ❤️</h1>
+        <p class="subtitle">O meu coração está sempre pertinho do seu.</p>
+        
+        <!-- Contador de Tempo Junto -->
+        <div class="counter-box">
+            <h3>Estamos juntos há:</h3>
+            <div id="timer">Carregando o nosso tempo...</div>
+        </div>
+    </header>
+
+    <!-- SEÇÃO 2: O Quiz Romântico -->
+    <main class="quiz-container">
+        <h2>Jogo do Amor: Você me conhece? 🕹️</h2>
+        <div id="quiz">
+            <div class="question-card" id="questionCard">
+                <p id="questionText">Carregando pergunta...</p>
+                <div class="options-grid" id="optionsBox">
+                    <!-- As opções de resposta vão aparecer aqui dinamicamente pelo arquivo game.js -->
+                </div>
+            </div>
+            <p id="quizFeedback" class="feedback-text"></p>
+        </div>
+    </main>
+
+    <!-- SEÇÃO 3: A Cartinha Secreta (Fica escondida até ela acertar o quiz) -->
+    <section class="love-letter-section hidden" id="loveLetterSection">
+        <div class="letter-box">
+            <h2>Minha Cartinha para Você 💌</h2>
+            <div class="letter-text" id="typewriterLetter">
+                <!-- O texto da sua carta vai aparecer aqui com efeito de máquina de escrever pelo main.js -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts de controle -->
+    <script src="js/main.js"></script>
+    <script src="js/game.js"></script>
+</body>
+</html>

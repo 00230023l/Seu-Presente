@@ -1,0 +1,286 @@
+/* ==========================================================================
+   1. CONFIGURAÇÕES GERAIS E RESETS
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #ffe3e3 0%, #fbe1ed 50%, #fbc2eb 100%);
+    min-height: 100vh;
+    color: #4a4a4a;
+    overflow-x: hidden;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Container para os corações flutuantes no fundo */
+.hearts-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none; /* Garante que os corações não atrapalhem os cliques */
+    z-index: 0;
+}
+
+/* ==========================================================================
+   2. HERO SECTION (BOAS-VINDAS E CONTADOR)
+   ========================================================================== */
+.hero-section {
+    text-align: center;
+    margin-top: 40px;
+    margin-bottom: 40px;
+    z-index: 1;
+    width: 100%;
+    max-width: 600px;
+}
+
+.main-title {
+    font-family: 'Dancing Script', cursive;
+    font-size: 3.5rem;
+    color: #ff477e;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.subtitle {
+    font-size: 1.1rem;
+    color: #6c757d;
+    font-weight: 300;
+}
+
+/* Caixa do Contador */
+.counter-box {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(255, 71, 126, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.counter-box h3 {
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #ff7096;
+    margin-bottom: 10px;
+}
+
+#timer {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #ff477e;
+}
+
+/* ==========================================================================
+   3. CONTAINER DO QUIZ
+   ========================================================================== */
+.quiz-container {
+    background: rgba(255, 255, 255, 0.9);
+    border-radius: 25px;
+    padding: 35px 25px;
+    width: 100%;
+    max-width: 550px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    margin-bottom: 40px;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    transition: all 0.5s ease;
+}
+
+.quiz-container h2 {
+    font-size: 1.4rem;
+    color: #333;
+    margin-bottom: 25px;
+}
+
+/* Card da Pergunta Atual */
+.question-card {
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#questionText {
+    font-size: 1.2rem;
+    font-weight: 400;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    color: #4a4a4a;
+}
+
+/* Grid de Botões de Opções */
+.options-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.option-btn {
+    background: #fff;
+    border: 2px solid #ffccd5;
+    padding: 14px 20px;
+    border-radius: 15px;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    color: #4a4a4a;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    font-weight: 400;
+    outline: none;
+}
+
+.option-btn:hover {
+    background: #ff477e;
+    border-color: #ff477e;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
+}
+
+.option-btn:active {
+    transform: translateY(0);
+}
+
+/* Mensagem de Feedback (Certo / Errado) */
+.feedback-text {
+    margin-top: 15px;
+    font-weight: 600;
+    min-height: 24px;
+    transition: color 0.3s ease;
+}
+
+.feedback-text.correct {
+    color: #2ec4b6;
+}
+
+.feedback-text.wrong {
+    color: #e63946;
+}
+
+/* ==========================================================================
+   4. SEÇÃO DA CARTINHA DE AMOR
+   ========================================================================== */
+.love-letter-section {
+    width: 100%;
+    max-width: 600px;
+    z-index: 1;
+    margin-bottom: 50px;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.letter-box {
+    background: #fffdf9; /* Tom sutil de papel antigo */
+    border-radius: 20px;
+    padding: 40px 30px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
+    border-left: 5px solid #ff477e;
+    position: relative;
+}
+
+/* Detalhe decorativo que lembra uma carta real */
+.letter-box::before {
+    content: '💌';
+    position: absolute;
+    top: -20px;
+    right: 30px;
+    font-size: 2rem;
+}
+
+.letter-box h2 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2.5rem;
+    color: #ff477e;
+    margin-bottom: 25px;
+    text-align: center;
+}
+
+.letter-text {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: #555;
+    white-space: pre-line; /* Respeita as quebras de linha que fizermos no JS */
+    text-align: left;
+}
+
+/* ==========================================================================
+   5. CLASSES UTILITÁRIAS E ANIMAÇÕES
+   ========================================================================== */
+
+/* Esconde elementos (usado para ocultar a carta até o quiz acabar) */
+.hidden {
+    display: none !important;
+}
+
+/* Estilo básico para os corações individuais gerados por JS */
+.heart-element {
+    position: absolute;
+    color: #ff7096;
+    opacity: 0.6;
+    font-size: 1.5rem;
+    animation: floatUp linear infinite;
+}
+
+/* Animação para os corações subirem */
+@keyframes floatUp {
+    0% {
+        transform: translateY(105vh) rotate(0deg) scale(0.8);
+        opacity: 0.8;
+    }
+    50% {
+        opacity: 0.4;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg) scale(1.2);
+        opacity: 0;
+    }
+}
+
+/* Animação suave de surgimento para a carta */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   6. RESPONSIVIDADE (PARA CELULAR)
+   ========================================================================== */
+@media (max-width: 480px) {
+    .main-title {
+        font-size: 2.8rem;
+    }
+    
+    .quiz-container {
+        padding: 25px 15px;
+    }
+    
+    #questionText {
+        font-size: 1.1rem;
+    }
+    
+    .option-btn {
+        padding: 12px 15px;
+        font-size: 0.95rem;
+    }
+    
+    .letter-box {
+        padding: 30px 20px;
+    }
+}
