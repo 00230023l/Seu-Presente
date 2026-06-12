@@ -5,7 +5,7 @@
 // AJUSTE A DATA DO INÍCIO DO NAMORO AQUI!
 // Formato: Ano, Mês (Atenção: Janeiro é 0, Fevereiro é 1, Março é 2... Junho é 5)
 // Configurei abaixo como exemplo o dia 12 de Junho de 2025. Mude para a data real de vocês!
-const DATA_INICIO_NAMORO = new Date(2025, 5, 12, 0, 0, 0); 
+const DATA_INICIO_NAMORO = new Date(2026, 4, 5, 14, 0, 0); 
 
 // TEXTO COMPLETO DA SUA CARTINHA DE AMOR
 // Sinta-se livre para aumentar ou reescrever este texto como quiser dentro das crases (``).
