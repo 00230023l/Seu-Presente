@@ -1,158 +1,153 @@
 /* ==========================================================================
-   CONFIGURAÇÃO DO BANCO DE PERGUNTAS DO QUIZ
+   1. CONFIGURAÇÃO DO BANCO DE PERGUNTAS DO QUIZ
    ========================================================================== */
 
 // Array de objetos contendo as 5 perguntas personalizadas para a Emily.
-// Cada objeto tem a pergunta, as opções de resposta e o índice da resposta correta.
+// Cada objeto possui a pergunta, o array de opções e o índice da resposta correta.
 const BANCO_DE_PERGUNTAS = [
     {
         pergunta: "Qual é a minha música preferida? 🎵",
-        opcoes: [
-            "From the Star", 
-            "No One Noticed"
-        ],
-        respostaCorreta: 0 // Índice 0 corresponde a "From the Star" (Ajuste se for a outra!)
+        opcoes: ["From the Star", "No One Noticed"],
+        respostaCorreta: 0 // Índice 0 para "From the Star" (Ajuste se for a outra!)
     },
     {
         pergunta: "Quantas vezes por dia você acha que eu lembro de você e dou um sorriso bobo? 🥰",
-        opcoes: [
-            "Só quando estou respirando", 
-            "24 horas por dia, sem parar"
-        ],
-        respostaCorreta: 1 // Ambas são fofas, mas a B é a resposta ideal
+        opcoes: ["Só quando estou respirando", "24 horas por dia, sem parar"],
+        respostaCorreta: 1 // Qualquer uma será aceita, mas a segunda é a resposta ideal
     },
     {
         pergunta: "Qual é a primeira coisa que eu quero fazer assim que a gente se ver? ❤️",
-        opcoes: [
-            "Te dar o abraço mais longo do mundo e não soltar mais", 
-            "Ficar te olhando e sorrindo igual um bobo sem acreditar"
-        ],
-        respostaCorreta: 0 // Você pode definir qualquer uma como certa, o amor é o mesmo!
+        opcoes: ["Te dar o abraço mais longo do mundo e não soltar mais", "Ficar te olhando e sorrindo igual um bobo sem acreditar"],
+        respostaCorreta: 0 // Qualquer opção escolhida avançará com sucesso
     },
     {
         pergunta: "Quem é a pessoa mais incrível, perfeita, linda e que ganha o prêmio de dona do meu coração? 👑",
-        opcoes: [
-            "Com certeza é a Emily", 
-            "A resposta anterior está absolutamente certa"
-        ],
-        respostaCorreta: 0 // Na lógica abaixo, vamos fazer as duas aceitarem como correto!
+        opcoes: ["Com certeza é a Emily", "A resposta anterior está absolutamente certa"],
+        respostaCorreta: 0 // Ambas as alternativas representam a verdade absoluta!
     },
     {
         pergunta: "Você promete continuar sendo o meu amor por muitos e muitos Dias dos Namorados? 💍",
-        opcoes: [
-            "Sim, hoje, amanhã e sempre!", 
-            "Com toda a certeza do mundo!"
-        ],
-        respostaCorreta: 0 // Pergunta final: as duas opções também serão aceitas como corretas!
+        opcoes: ["Sim, hoje, amanhã e sempre!", "Com toda a certeza do mundo!"],
+        respostaCorreta: 0 // Pergunta final para fechar o quiz em alto nível
     }
 ];
 
 /* ==========================================================================
-   VARIÁVEIS DE CONTROLE DE ESTADO
+   2. VARIÁVEIS DE CONTROLE DE ESTADO DO JOGO
    ========================================================================== */
 let indicePerguntaAtual = 0;
-let quizBloqueado = false; // Evita múltiplos cliques rápidos enquanto exibe o feedback
+let quizBloqueado = false; // Evita múltiplos cliques rápidos enquanto o feedback é exibido
+
 
 /* ==========================================================================
-   FUNÇÕES DE RENDERIZAÇÃO E LÓGICA DO JOGO
+   3. FUNÇÕES DE RENDERIZAÇÃO E FLUXO DO QUIZ
    ========================================================================== */
 
-// Função responsável por desenhar a pergunta atual e seus botões na tela
+// Função responsável por limpar a tela e desenhar a pergunta atual com seus botões
 function carregarPergunta() {
     const textoPergunta = document.getElementById('questionText');
     const caixaOpcoes = document.getElementById('optionsBox');
     const feedbackQuiz = document.getElementById('quizFeedback');
 
+    // Validação de segurança para garantir que os elementos existem no HTML
     if (!textoPergunta || !caixaOpcoes) return;
 
-    // Limpa feedbacks anteriores e reseta o bloqueio de cliques
+    // Reseta o estado visual do feedback e libera novos cliques
     feedbackQuiz.innerText = "";
     feedbackQuiz.className = "feedback-text";
     caixaOpcoes.innerHTML = "";
     quizBloqueado = false;
 
-    // Pega os dados da pergunta atual com base no índice
+    // Captura os dados da pergunta atual com base no índice de controle
     const dadosPergunta = BANCO_DE_PERGUNTAS[indicePerguntaAtual];
     textoPergunta.innerText = dadosPergunta.pergunta;
 
-    // Cria os botões para cada opção disponível
+    // Mapeia e cria dinamicamente os botões de opção na tela da Emily
     dadosPergunta.opcoes.forEach((opcao, indice) => {
         const botao = document.createElement('button');
         botao.classList.add('option-btn');
         botao.innerText = opcao;
         
-        // Associa o evento de clique para validar a resposta passados o botão e o índice clicado
+        // Atribui o evento de escuta para validar a resposta ao clicar
         botao.addEventListener('click', () => checarResposta(indice));
         
         caixaOpcoes.appendChild(botao);
     });
 }
 
-// Função que valida se o clique da Emily foi na resposta certa
+// Função que valida se a opção clicada está correta ou se passa na regra romântica
 function checarResposta(indiceSelecionado) {
-    // Se o jogo estiver aguardando a próxima pergunta, ignora novos cliques
+    // Se o jogo estiver processando a transição, ignora novos cliques acidentais
     if (quizBloqueado) return;
     quizBloqueado = true;
 
     const dadosPergunta = BANCO_DE_PERGUNTAS[indicePerguntaAtual];
     const feedbackQuiz = document.getElementById('quizFeedback');
 
-    // Regra especial: Nas perguntas 4 e 5 (índices 3 e 4), qualquer resposta é linda e correta!
-    const ehPerguntaEspecial = (indicePerguntaAtual === 3 || indicePerguntaAtual === 4);
+    // REGRA ESPECIAL: A partir da pergunta 2 (índice 1 em diante), todas as opções 
+    // são fofas e serão aceitas como corretas automaticamente para não travar o fluxo!
+    const ehPerguntaAutoCorreta = (indicePerguntaAtual >= 1);
 
-    if (indiceSelecionado === dadosPergunta.respostaCorreta || ehPerguntaEspecial) {
-        // Resposta Correta!
-        feedbackQuiz.innerText = "Acertou! Você me conhece tão bem... ❤️";
+    if (indiceSelecionado === dadosPergunta.respostaCorreta || ehPerguntaAutoCorreta) {
+        // Feedback de Acerto
+        feedbackQuiz.innerText = "Acertou! ❤️";
         feedbackQuiz.className = "feedback-text correct";
 
-        // Aguarda 1.5 segundos para ela ler o feedback e passa para o próximo passo
+        // Aguarda 1.2 segundos para ela ler a resposta e muda o estado
         setTimeout(() => {
             indicePerguntaAtual++;
             
-            // Se ainda houver perguntas, carrega a próxima. Se não, finaliza o quiz.
+            // Verifica se ainda existem perguntas ou se o jogo chegou ao fim
             if (indicePerguntaAtual < BANCO_DE_PERGUNTAS.length) {
                 carregarPergunta();
             } else {
                 finalizarQuizComSucesso();
             }
-        }, 1500);
-
+        }, 1200);
     } else {
-        // Resposta Errada
-        feedbackQuiz.innerText = "Hum... Tente de novo! Eu sei que você consegue. 😘";
+        // Feedback de Erro (Caso ela erre a primeira pergunta sobre a música)
+        feedbackQuiz.innerText = "Hum... Tente a outra opção! 😘";
         feedbackQuiz.className = "feedback-text wrong";
         
-        // Libera o quiz novamente após 1 segundo para ela tentar outra alternativa
+        // Libera o botão novamente após 1 segundo para ela tentar de novo
         setTimeout(() => {
             quizBloqueado = false;
         }, 1000);
     }
 }
 
-// Função executada quando ela passa com sucesso por todo o desafio
+
+/* ==========================================================================
+   4. FINALIZAÇÃO DO QUIZ E INTEGRAÇÃO COM A SURPRESA (MAIN.JS)
+   ========================================================================== */
 function finalizarQuizComSucesso() {
     const containerQuiz = document.querySelector('.quiz-container');
     
     if (containerQuiz) {
-        // Efeito visual sumindo com a caixinha do quiz de forma elegante
+        // Efeito visual sumindo com o contêiner do quiz suavemente
         containerQuiz.style.opacity = '0';
         containerQuiz.style.transform = 'scale(0.9)';
         
+        // Aguarda a animação do CSS terminar (500ms) para sumir com o bloco do layout
         setTimeout(() => {
-            containerQuiz.classList.add('hidden'); // Remove do layout
+            containerQuiz.classList.add('hidden');
             
-            // Chamada da função global declarada no 'main.js' para revelar a carta
+            // Executa a chamada da função que está no main.js para soltar confetes, 
+            // mostrar o selo de verificada e iniciar a digitação da carta.
             if (typeof liberarRecompensaFinal === 'function') {
                 liberarRecompensaFinal();
+            } else {
+                console.error("Atenção: A função liberarRecompensaFinal não foi encontrada no main.js.");
             }
         }, 500);
     }
 }
 
+
 /* ==========================================================================
-   DISPARO DO EVENTO INICIAL
+   5. DISPARO DO EVENTO INICIAL
    ========================================================================== */
-// Garante que o jogo só comece a rodar após a página HTML estar totalmente carregada
+// Garante o início do jogo estritamente após o carregamento completo do DOM
 document.addEventListener('DOMContentLoaded', () => {
     carregarPergunta();
 });
