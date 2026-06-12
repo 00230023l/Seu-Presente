@@ -1,257 +1,334 @@
 /* ==========================================================================
-   1. CONFIGURAÇÕES GERAIS E RESETS
+   1. CONFIGURAÇÕES GERAIS, RESETS E VARIÁVEIS
    ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+html {
+    scroll-behavior: smooth;
 }
 
 body {
     font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #ffe3e3 0%, #fbe1ed 50%, #fbc2eb 100%);
+    /* Fundo degradê romântico e suave em tons de rosa e pastel */
+    background: linear-gradient(185deg, #ffe3e3 0%, #fbe1ed 40%, #ffd6e8 100%);
+    background-attachment: fixed;
     min-height: 100vh;
     color: #4a4a4a;
     overflow-x: hidden;
-    padding: 20px;
+    padding: 30px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: flex-start;
 }
 
-/* Container para os corações flutuantes no fundo */
+/* Container fixo em segundo plano para a chuva de corações cascata */
 .hearts-container {
     position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
-    pointer-events: none; /* Garante que os corações não atrapalhem os cliques */
+    pointer-events: none; /* Impede que os corações interceptem os cliques no site */
     z-index: 0;
 }
 
 /* ==========================================================================
-   2. HERO SECTION (BOAS-VINDAS E CONTADOR)
+   2. HERO SECTION (APRESENTAÇÃO E CONTADOR)
    ========================================================================== */
 .hero-section {
     text-align: center;
-    margin-top: 40px;
+    margin-top: 20px;
     margin-bottom: 40px;
     z-index: 1;
     width: 100%;
-    max-width: 600px;
+    max-width: 650px;
+    animation: fadeInUp 0.8s ease-out forwards;
 }
 
 .main-title {
     font-family: 'Dancing Script', cursive;
-    font-size: 3.5rem;
+    font-size: 4rem;
     color: #ff477e;
-    margin-bottom: 10px;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.05);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    text-shadow: 3px 3px 6px rgba(255, 71, 126, 0.15);
 }
 
 .subtitle {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     color: #6c757d;
     font-weight: 300;
+    line-height: 1.5;
 }
 
-/* Caixa do Contador */
+/* Painel Moderno do Cronômetro */
 .counter-box {
-    background: rgba(255, 255, 255, 0.75);
-    backdrop-filter: blur(10px);
-    border-radius: 20px;
-    padding: 20px;
-    margin-top: 30px;
-    box-shadow: 0 10px 30px rgba(255, 71, 126, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 24px;
+    padding: 25px 20px;
+    margin-top: 35px;
+    box-shadow: 0 15px 35px rgba(255, 71, 126, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.6);
 }
 
-.counter-box h3 {
-    font-size: 1rem;
+.counter-title {
+    font-size: 0.9rem;
     text-transform: uppercase;
-    letter-spacing: 1px;
+    letter-spacing: 1.5px;
     color: #ff7096;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
+    font-weight: 600;
 }
 
-#timer {
-    font-size: 1.3rem;
+.timer-display {
+    font-size: 1.4rem;
     font-weight: 600;
     color: #ff477e;
+    line-height: 1.6;
+}
+
+/* Customização dos números dentro do timer para maior destaque */
+.timer-display span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    background: linear-gradient(45deg, #ff477e, #ff7096);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    padding: 0 2px;
 }
 
 /* ==========================================================================
-   3. CONTAINER DO QUIZ
+   3. PAINEL CENTRAL DO QUIZ INTERATIVO
    ========================================================================== */
 .quiz-container {
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 25px;
-    padding: 35px 25px;
+    background: rgba(255, 255, 255, 0.92);
+    border-radius: 28px;
+    padding: 40px 30px;
     width: 100%;
-    max-width: 550px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    max-width: 580px;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.05);
     text-align: center;
     margin-bottom: 40px;
     z-index: 1;
-    border: 1px solid rgba(255, 255, 255, 0.8);
-    transition: all 0.5s ease;
+    border: 1px solid rgba(255, 255, 255, 0.9);
+    opacity: 1;
+    transform: scale(1);
+    transition: opacity 0.5s ease, transform 0.5s ease, display 0.5s ease;
 }
 
-.quiz-container h2 {
-    font-size: 1.4rem;
-    color: #333;
-    margin-bottom: 25px;
+.quiz-header h2 {
+    font-size: 1.5rem;
+    color: #2b2b2b;
+    margin-bottom: 6px;
+    font-weight: 600;
 }
 
-/* Card da Pergunta Atual */
+.quiz-instruction {
+    font-size: 0.9rem;
+    color: #8e8e8e;
+    margin-bottom: 30px;
+}
+
+/* Card Interno das Perguntas */
 .question-card {
-    min-height: 180px;
+    min-height: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
-#questionText {
-    font-size: 1.2rem;
-    font-weight: 400;
+.question-text {
+    font-size: 1.25rem;
+    font-weight: 500;
     line-height: 1.6;
-    margin-bottom: 25px;
-    color: #4a4a4a;
+    margin-bottom: 30px;
+    color: #3a3a3a;
 }
 
-/* Grid de Botões de Opções */
+/* Grid de Organização dos Botões */
 .options-grid {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 14px;
+    width: 100%;
 }
 
+/* Estilização Avançada dos Botões do Quiz */
 .option-btn {
-    background: #fff;
-    border: 2px solid #ffccd5;
-    padding: 14px 20px;
-    border-radius: 15px;
-    font-size: 1rem;
+    background: #ffffff;
+    border: 2px solid #ffe0e6;
+    padding: 16px 24px;
+    border-radius: 18px;
+    font-size: 1.05rem;
     font-family: 'Poppins', sans-serif;
-    color: #4a4a4a;
+    color: #4f4f4f;
     cursor: pointer;
-    transition: all 0.25s ease;
-    font-weight: 400;
+    font-weight: 500;
     outline: none;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.01);
 }
 
 .option-btn:hover {
     background: #ff477e;
     border-color: #ff477e;
-    color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 71, 126, 0.3);
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(255, 71, 126, 0.35);
 }
 
 .option-btn:active {
-    transform: translateY(0);
+    transform: translateY(-1px);
 }
 
-/* Mensagem de Feedback (Certo / Errado) */
+/* Status de Feedback Visual (Acertos/Erros) */
 .feedback-text {
-    margin-top: 15px;
+    margin-top: 20px;
     font-weight: 600;
+    font-size: 1rem;
     min-height: 24px;
-    transition: color 0.3s ease;
 }
 
 .feedback-text.correct {
     color: #2ec4b6;
+    animation: pulse 0.4s ease;
 }
 
 .feedback-text.wrong {
     color: #e63946;
+    animation: shake 0.4s ease;
 }
 
 /* ==========================================================================
-   4. SEÇÃO DA CARTINHA DE AMOR
+   4. SEÇÃO DO SELO VERIFICADO E DA CARTA DE AMOR
    ========================================================================== */
 .love-letter-section {
     width: 100%;
-    max-width: 600px;
+    max-width: 620px;
     z-index: 1;
-    margin-bottom: 50px;
-    animation: fadeInUp 1s ease forwards;
+    margin-bottom: 60px;
+    animation: fadeInUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+/* Container do Selo Azul Autêntico */
+.verified-badge-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 25px;
+    animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.verified-badge {
+    background: #e8f4fd;
+    border: 1px solid #7cd1f9;
+    padding: 12px 24px;
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    box-shadow: 0 6px 20px rgba(29, 155, 240, 0.15);
+}
+
+.badge-icon {
+    background: #1d9bf0;
+    color: #ffffff;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: bold;
+}
+
+.badge-text {
+    color: #1d9bf0;
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: 0.3px;
+}
+
+/* Box da Carta com Design Pergaminho Clean */
 .letter-box {
-    background: #fffdf9; /* Tom sutil de papel antigo */
-    border-radius: 20px;
-    padding: 40px 30px;
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
-    border-left: 5px solid #ff477e;
+    background: #fffdfa;
+    border-radius: 24px;
+    padding: 45px 35px;
+    box-shadow: 0 25px 55px rgba(0, 0, 0, 0.07);
+    border-left: 6px solid #ff477e;
     position: relative;
 }
 
-/* Detalhe decorativo que lembra uma carta real */
 .letter-box::before {
     content: '💌';
     position: absolute;
-    top: -20px;
-    right: 30px;
-    font-size: 2rem;
+    top: -22px;
+    right: 35px;
+    font-size: 2.2rem;
 }
 
-.letter-box h2 {
+.letter-header h2 {
     font-family: 'Dancing Script', cursive;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     color: #ff477e;
-    margin-bottom: 25px;
+    margin-bottom: 30px;
     text-align: center;
 }
 
 .letter-text {
-    font-size: 1.1rem;
-    line-height: 1.8;
-    color: #555;
-    white-space: pre-line; /* Respeita as quebras de linha que fizermos no JS */
+    font-size: 1.15rem;
+    line-height: 1.85;
+    color: #4a4a4a;
+    white-space: pre-line; /* Mantém as quebras de linha estipuladas no JavaScript */
     text-align: left;
 }
 
 /* ==========================================================================
-   5. CLASSES UTILITÁRIAS E ANIMAÇÕES
+   5. CLASSES UTILITÁRIAS E ANIMAÇÕES VIA EFEITOS (KEYFRAMES)
    ========================================================================== */
-
-/* Esconde elementos (usado para ocultar a carta até o quiz acabar) */
 .hidden {
     display: none !important;
 }
 
-/* Estilo básico para os corações individuais gerados por JS */
+/* Estilização dinâmica para as cascatas de corações criadas pelo JS */
 .heart-element {
     position: absolute;
     color: #ff7096;
-    opacity: 0.6;
-    font-size: 1.5rem;
-    animation: floatUp linear infinite;
+    user-select: none;
+    pointer-events: none;
+    animation: fallDown linear infinite;
 }
 
-/* Animação para os corações subirem */
-@keyframes floatUp {
+/* Correção da animação: Corações CAINDO como chuva contínua */
+@keyframes fallDown {
     0% {
-        transform: translateY(105vh) rotate(0deg) scale(0.8);
-        opacity: 0.8;
-    }
-    50% {
-        opacity: 0.4;
-    }
-    100% {
-        transform: translateY(-10vh) rotate(360deg) scale(1.2);
+        transform: translateY(-10vh) rotate(0deg) scale(0.6);
         opacity: 0;
     }
+    15% {
+        opacity: 0.75; /* Surge suavemente ao surgir no topo */
+    }
+    90% {
+        opacity: 0.6;
+    }
+    100% {
+        transform: translateY(105vh) rotate(360deg) scale(1.2);
+        opacity: 0; /* Desaparece por completo ao sair do campo visual abaixo */
+    }
 }
 
-/* Animação suave de surgimento para a carta */
+/* Animação estrutural para subida de seções */
 @keyframes fadeInUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(40px);
     }
     to {
         opacity: 1;
@@ -259,28 +336,86 @@ body {
     }
 }
 
+/* Animação de entrada do Selo Verificado */
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: scale(0.5);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Efeito tremor para feedback de erros */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+}
+
+/* Efeito pulso para feedback de acertos */
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.04); }
+    100% { transform: scale(1); }
+}
+
 /* ==========================================================================
-   6. RESPONSIVIDADE (PARA CELULAR)
+   6. RESPONSIVIDADE TOTAL (MOBILE-FIRST ADAPTATIONS)
    ========================================================================== */
-@media (max-width: 480px) {
+@media (max-width: 600px) {
+    body {
+        padding: 15px 12px;
+    }
+
     .main-title {
-        font-size: 2.8rem;
+        font-size: 3.2rem;
     }
-    
+
+    .subtitle {
+        font-size: 1rem;
+    }
+
+    .counter-box {
+        padding: 20px 15px;
+        margin-top: 25px;
+    }
+
+    .timer-display {
+        font-size: 1.15rem;
+    }
+
+    .timer-display span {
+        font-size: 1.45rem;
+    }
+
     .quiz-container {
-        padding: 25px 15px;
+        padding: 30px 15px;
     }
-    
-    #questionText {
+
+    .question-text {
         font-size: 1.1rem;
+        margin-bottom: 20px;
     }
-    
+
     .option-btn {
-        padding: 12px 15px;
+        padding: 14px 20px;
         font-size: 0.95rem;
+        border-radius: 15px;
     }
-    
+
     .letter-box {
-        padding: 30px 20px;
+        padding: 35px 20px;
+    }
+
+    .letter-header h2 {
+        font-size: 2.3rem;
+    }
+
+    .letter-text {
+        font-size: 1.05rem;
+        line-height: 1.75;
     }
 }
